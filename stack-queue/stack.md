@@ -7,8 +7,8 @@
     * IsFull: Check if the stack is full
     * Peek: Get the value of the top element without removing it
 
-#### Problems
----
+#### Practice Problems :-
+-------------------------
 **Question 1:-** Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
 An input string is valid if:
     1. Open brackets must be closed by the same type of brackets.
@@ -86,5 +86,68 @@ string isBalanced(string str) {
         return "false";
     }
     return "true";
+}
+```
+**Question 2:-** For input an array, print the Next Greater Element (NGE) for every element. The Next greater Element for an element x is the first greater element on the right side of x in the array. Elements for which no greater element exist, consider the next greater element as -1.
+Example 1:
+```
+Input Array - [7, 3, 9, 8]
+Output - 9 9 -1 8
+```
+**Ans:-**
+* We will loop through elements of the given array then for a particular element we would compare to the elements in the stack from the top.
+* If there current element from the top of stack is less than current element of the input array then we know that current element of array is the nge of current element of stack.
+* We save the nge for current element of stack and pop it form the stack. We will continue it until stack is not empty and the current element from the top of stack is less than current element of the input array.
+```go
+// golang implementation
+func nge(arr []int) {
+	stack := make([]int, len(arr)) // stack of indexes (not stack of elements)
+	ans := make([]int, len(arr))   // indexes of NGE
+	top := -1
+	for idx, ele := range arr {
+		for top != -1 && arr[stack[top]] < ele { // if stack is not empty and top element of stack is less than current element(ele)
+			ans[stack[top]] = idx // current element is NGE of top element of stack
+			top -= 1              // pop the top element
+		}
+		top += 1
+		stack[top] = idx
+	}
+	for top != -1 {
+		ans[stack[top]] = -1 // store -1 in place of index if NGE is not present
+		top -= 1
+	}
+	for i, ele := range ans {
+		if ele == -1 {
+			fmt.Println(arr[i], " ", ele)
+			continue
+		}
+		fmt.Println(arr[i], " ", arr[ele])
+	}
+}
+```
+```cpp
+// c++ implementation
+void nge(vector<int> arr){
+    stack<int> st; // store indexes of input array
+    vector<int> ans(arr.size()); // store indexes of NGE from input array
+    for(int i = 0; i < arr.size(); ++i){
+        while (!st.empty() && arr[st.top()] < arr[i]){
+            ans[st.top()] = i;
+            st.pop();
+        }
+        st.push(i);
+    }
+    while(!st.empty()){
+        ans[st.top()] = -1;
+        st.pop();
+    }
+    
+    for(int i = 0; i < arr.size(); ++i){
+        if (ans[i] == -1) {
+            cout << arr[i] << " " << -1 << endl;
+            continue;   
+        }
+        cout << arr[i] << " " << arr[ans[i]] << endl;
+    }
 }
 ```
