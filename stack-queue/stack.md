@@ -66,7 +66,7 @@ func isBalanced(s string) string {
 }
 ```
 ```cpp
-// cpp
+// c++
 string isBalanced(string str) {
     stack<char> s;
     for(char c:str){
@@ -99,7 +99,7 @@ Output - 9 9 -1 8
 * If there current element from the top of stack is less than current element of the input array then we know that current element of array is the nge of current element of stack.
 * We save the nge for current element of stack and pop it form the stack. We will continue it until stack is not empty and the current element from the top of stack is less than current element of the input array.
 ```go
-// golang implementation
+// golang
 func nge(arr []int) {
 	stack := make([]int, len(arr)) // stack of indexes (not stack of elements)
 	ans := make([]int, len(arr))   // indexes of NGE
@@ -126,7 +126,7 @@ func nge(arr []int) {
 }
 ```
 ```cpp
-// c++ implementation
+// c++
 void nge(vector<int> arr){
     stack<int> st; // store indexes of input array
     vector<int> ans(arr.size()); // store indexes of NGE from input array
